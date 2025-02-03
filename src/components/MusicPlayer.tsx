@@ -3,9 +3,23 @@ import PlayerControls from "./PlayerControls";
 import VolumeControl from "./VolumeControl";
 
 const MusicPlayer = () => {
-  const { currentTrack } = useAudio();
+  const { currentTrack, currentTime, duration, seek } = useAudio();
 
   if (!currentTrack) return null;
+
+  const formatTime = (time: number) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  };
+
+  const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
+    const bounds = e.currentTarget.getBoundingClientRect();
+    const percent = (e.clientX - bounds.left) / bounds.width;
+    seek(percent * duration);
+  };
+
+  const progress = duration ? (currentTime / duration) * 100 : 0;
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-black/90 backdrop-blur-lg p-4 border-t border-white/10">
@@ -26,13 +40,19 @@ const MusicPlayer = () => {
           <PlayerControls />
           <div className="mt-2">
             <div className="flex items-center gap-2 text-sm text-white/60">
-              <span>0:00</span>
-              <div className="flex-1 h-1 bg-white/20 rounded-full">
-                <div className="w-1/3 h-full bg-white rounded-full relative group cursor-pointer">
+              <span>{formatTime(currentTime)}</span>
+              <div 
+                className="flex-1 h-1 bg-white/20 rounded-full cursor-pointer"
+                onClick={handleSeek}
+              >
+                <div 
+                  className="h-full bg-white rounded-full relative group"
+                  style={{ width: `${progress}%` }}
+                >
                   <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
               </div>
-              <span>3:45</span>
+              <span>{formatTime(duration)}</span>
             </div>
           </div>
         </div>

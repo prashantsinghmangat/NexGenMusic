@@ -10,6 +10,9 @@ interface AudioContextType {
   playPrevious: () => void;
   setCurrentTrack: (track: Track) => void;
   audioElement: HTMLAudioElement | null;
+  currentTime: number;
+  duration: number;
+  seek: (time: number) => void;
 }
 
 const AudioContext = createContext<AudioContextType | undefined>(undefined);
@@ -17,15 +20,37 @@ const AudioContext = createContext<AudioContextType | undefined>(undefined);
 export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentTrack, setCurrentTrack] = useState<Track | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     audioRef.current = new Audio();
+    
+    const audio = audioRef.current;
+    
+    const handleTimeUpdate = () => {
+      setCurrentTime(audio.currentTime);
+    };
+    
+    const handleLoadedMetadata = () => {
+      setDuration(audio.duration);
+    };
+    
+    const handleEnded = () => {
+      playNext();
+    };
+
+    audio.addEventListener('timeupdate', handleTimeUpdate);
+    audio.addEventListener('loadedmetadata', handleLoadedMetadata);
+    audio.addEventListener('ended', handleEnded);
+
     return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current = null;
-      }
+      audio.removeEventListener('timeupdate', handleTimeUpdate);
+      audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      audio.removeEventListener('ended', handleEnded);
+      audio.pause();
+      audioRef.current = null;
     };
   }, []);
 
@@ -47,6 +72,13 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
       audioRef.current.pause();
     }
     setIsPlaying(false);
+  };
+
+  const seek = (time: number) => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = time;
+      setCurrentTime(time);
+    }
   };
 
   const playNext = () => {
@@ -74,6 +106,9 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
         playPrevious,
         setCurrentTrack,
         audioElement: audioRef.current,
+        currentTime,
+        duration,
+        seek,
       }}
     >
       {children}
