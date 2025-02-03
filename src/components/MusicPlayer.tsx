@@ -1,19 +1,24 @@
+import { useAudio } from "@/contexts/AudioContext";
 import PlayerControls from "./PlayerControls";
 import VolumeControl from "./VolumeControl";
 
 const MusicPlayer = () => {
+  const { currentTrack } = useAudio();
+
+  if (!currentTrack) return null;
+
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-player-surface p-4 border-t border-white/10">
+    <div className="fixed bottom-0 left-0 right-0 bg-black/90 backdrop-blur-lg p-4 border-t border-white/10">
       <div className="container mx-auto flex items-center justify-between">
         <div className="flex items-center gap-4">
           <img
-            src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b"
-            alt="Album Cover"
+            src={currentTrack.coverUrl}
+            alt={`${currentTrack.title} Cover`}
             className="w-14 h-14 rounded-md object-cover"
           />
           <div>
-            <h3 className="text-white font-medium">Track Title</h3>
-            <p className="text-white/60 text-sm">Artist Name</p>
+            <h3 className="text-white font-medium">{currentTrack.title}</h3>
+            <p className="text-white/60 text-sm">{currentTrack.artist}</p>
           </div>
         </div>
         
