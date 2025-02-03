@@ -1,4 +1,5 @@
 import { Search, Menu } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -6,7 +7,7 @@ const Header = () => {
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <Menu className="w-6 h-6 text-white/80 hover:text-white cursor-pointer" />
-          <h1 className="text-xl font-bold text-white">NexGenMusic</h1>
+          <Link to="/" className="text-xl font-bold text-white">NexGenMusic</Link>
         </div>
         <div className="relative max-w-md w-full hidden md:block">
           <input
@@ -17,7 +18,17 @@ const Header = () => {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/60" />
         </div>
         <div className="flex items-center gap-4">
-          <button className="text-white/80 hover:text-white">Sign In</button>
+          <Link to="/blog" className="text-white/80 hover:text-white transition-colors">
+            Blog
+          </Link>
+          <a
+            href="https://prashantsinghmangat.netlify.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-white/80 hover:text-white transition-colors"
+          >
+            About Prashant Singh
+          </a>
         </div>
       </div>
     </header>
