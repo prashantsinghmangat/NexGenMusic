@@ -15,8 +15,11 @@ const MusicPlayer = () => {
 
   const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
     const bounds = e.currentTarget.getBoundingClientRect();
-    const percent = (e.clientX - bounds.left) / bounds.width;
-    seek(percent * duration);
+    const x = e.clientX - bounds.left;
+    const percent = x / bounds.width;
+    if (percent >= 0 && percent <= 1) {
+      seek(percent * duration);
+    }
   };
 
   const progress = duration ? (currentTime / duration) * 100 : 0;
@@ -42,7 +45,7 @@ const MusicPlayer = () => {
             <div className="flex items-center gap-2 text-sm text-white/60">
               <span>{formatTime(currentTime)}</span>
               <div 
-                className="flex-1 h-1 bg-white/20 rounded-full cursor-pointer"
+                className="flex-1 h-1 bg-white/20 rounded-full cursor-pointer relative"
                 onClick={handleSeek}
               >
                 <div 
