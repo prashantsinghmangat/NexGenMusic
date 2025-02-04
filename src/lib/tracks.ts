@@ -42,5 +42,26 @@ export const tracks: Track[] = [
     artist: "Coma-Media",
     audioUrl: "https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0c6ff1a42.mp3",
     coverUrl: "https://images.unsplash.com/photo-1614149162883-504ce4d13909"
+  },
+  {
+    id: 6,
+    title: "Cinematic Dreams",
+    artist: "SergePavkinMusic",
+    audioUrl: "https://cdn.pixabay.com/download/audio/2023/06/29/audio_7631be971d.mp3",
+    coverUrl: "https://images.unsplash.com/photo-1536440136628-849c177e76a1"
+  },
+  {
+    id: 7,
+    title: "Calm Piano",
+    artist: "MusicLFiles",
+    audioUrl: "https://cdn.pixabay.com/download/audio/2022/08/02/audio_884fe92c21.mp3",
+    coverUrl: "https://images.unsplash.com/photo-1552422535-c45813c61732"
+  },
+  {
+    id: 8,
+    title: "Inspiring Ambient",
+    artist: "AudioCoffee",
+    audioUrl: "https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3",
+    coverUrl: "https://images.unsplash.com/photo-1519638399535-1b036603ac77"
   }
 ];

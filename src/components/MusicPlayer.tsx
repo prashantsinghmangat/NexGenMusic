@@ -45,11 +45,11 @@ const MusicPlayer = () => {
             <div className="flex items-center gap-2 text-sm text-white/60">
               <span>{formatTime(currentTime)}</span>
               <div 
-                className="flex-1 h-1 bg-white/20 rounded-full cursor-pointer relative"
+                className="flex-1 h-1 bg-white/20 rounded-full cursor-pointer relative group"
                 onClick={handleSeek}
               >
                 <div 
-                  className="h-full bg-white rounded-full relative group"
+                  className="h-full bg-white rounded-full relative"
                   style={{ width: `${progress}%` }}
                 >
                   <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
